@@ -51,8 +51,98 @@ def get_next_square(tiles, index):
 
     #def project: if directions = down: project_down(self) etc
 
+    index_square_tiles = []
     
+    def project_up():
+        x_values = []
+        for tile in tiles:
+            x_values.append(tile[0])
+        y_values = []
+        for tile in tiles:
+            y_values.append(tile[1])
+
+        # need top left and top right tile
+
+        left_top_tile = (min(x_values), min(y_values))
+        right_top_tile = (max(x_values), min(y_values))
+
+        #the top line of tiles
+        top_line = []
+        for i in range(left_top_tile[0], right_top_tile[0]+1):
+            top_line.append((i, max(y_values)))
+
+        fibo = fib(index)
+
+        # get the tiles of the square at index
+        index_square_tiles = []
+        for i in range(left_top_tile[0], right_top_tile[0]+1):
+            for j in range(max(y_values) + 1, fibo+1):
+                index_square_tiles.append((i ,j))
+        return index_square_tiles
+
+    def project_right():
+        x_values = []
+        for tile in tiles:
+            x_values.append(tile[0])
+        y_values = []
+        for tile in tiles:
+            y_values.append(tile[1])
+
+        #need me some bottom right and top right tile
+
+        right_top_tile = (max(x_values), min(y_values))
+        right_bot_tile = (max(x_values), max(y_values))
+
+        #the right line of tiles
+        right_line = []
+        for i in range(right_top_tile[1], right_bot_tile[1]+1):
+            right_line.append((max(x_values), i))
+
+        fibo = fib(index)
+
+        # get the tiles of the square at index
+        index_square_tiles = []
+
+        #use len(right_line)+1 instead maybe
+        for i in range(right_top_tile[1], right_bot_tile[1]+1):
+            for j in range(max(x_values) + 1, fibo+1):
+                index_square_tiles.append((j ,i))
+        return index_square_tiles
+
+
+        ## faulty ##
     
+
+    #### !!! New version of index_square_titles.append() maybe better ####
+    def project_left():
+        x_values = []
+        for tile in tiles:
+            x_values.append(tile[0])
+        y_values = []
+        for tile in tiles:
+            y_values.append(tile[1])
+
+        #need me some bottom left and top left tile
+
+        left_top_tile = (min(x_values), min(y_values))
+        left_bot_tile = (min(x_values), max(y_values))
+
+        #the left line of tiles
+        left_line = []
+        for i in range(left_top_tile[1], left_bot_tile[1]+1):
+            left_line.append((min(x_values), i))
+
+        fibo = fib(index)
+
+        # get the tiles of the square at index
+        index_square_tiles = []
+
+        for j in range(1, fibo+1):
+            for i in (left_line):
+                index_square_tiles.append((i[0]-j, i[1]))
+
+        return index_square_tiles
+
     def project_down():
         #find left and right bottom tile
         x_values = []
@@ -81,6 +171,12 @@ def get_next_square(tiles, index):
     
     if get_move_directions(index) == "down":
         index_square_tiles = project_down()
+    elif get_move_directions(index) == "up":
+        index_square_tiles = project_up()
+    elif get_move_directions(index) == "right":
+        index_square_tiles = project_right()
+    elif get_move_directions(index) == "left":
+        index_square_tiles = project_left()
         #print index_square_tiles
         #> **
 
@@ -92,35 +188,53 @@ def get_next_square(tiles, index):
     return added_tiles
                 
 
-
-rectangle_4 = [(0,0), (1,0), (0,-1), (0,-2), (1,-1), (1,-2), (-1,0), (-2,0), (-3,0), (-1,-1), (-2,-1), (-3,-1), (-1,-2), (-2,-2), (-3,-3)]
-
+rectangle_3 = [(0,0),(1,0), (0,-1), (0,-2), (1,-1),(1,-2)]
+            
+#rectangle_4 = [(0,0), (1,0), (0,-1), (0,-2), (1,-1), (1,-2), (-1,0), (-2,0), (-3,0), (-1,-1), (-2,-1), (-3,-1), (-1,-2), (-2,-2), (-3,-3)]
+rectangle_4 = get_next_square(rectangle_3, 4)
 rectangle_5 = get_next_square(rectangle_4, 5)
+rectangle_6 = get_next_square(rectangle_5, 6)
 
+
+print("Rectangle 4: ")
+print(rectangle_4)
+print("\n"*2)
+print("Rectangle 5: ")
 print(rectangle_5)
+print("\n"*2)
+print("Rectangle 6: ")
+print(rectangle_6)
+print("\n"*2)
 
-# [0, 0]
 
-# [(0,0),(1,0)]
 
-# [(0,0),(1,0), (0,-1), (0,-2), (1,-1),(1,-2)]
+#rectangle 1 = [0, 0]
 
-# [(0,0),(1,0), (0,-1), (0,-2), (1,-1),(1,-2), (-1,0), (-2,0), (-3,0) (-1,-1) (-2,-1) (-3,-1) (-1,-2) (-2,-2) (-3,-3)]
+#rectangle 2 = [(0,0),(1,0)]
 
-# [(0,0), (1,0), (0,-1), (0,-2), (1,-1), (1,-2), (-1,0), (-2,0), (-3,0), (-1,-1), (-2,-1), (-3,-1), (-1,-2), (-2,-2), (-3,-3), 
-# (-3,1), (-3,2), (-3,3), (-3,4), (-3,5), (-2,1), (-2,2), (-2,3), (-2,4), (-2,5), (-1,1), (-1,2), (-1,3), (-1,4), (-1,5), 
-# (0,1), (0,2), (0,3), (0,4), (0,5), (1,1), (1,2), (1,3), (1,4), (1,5)]
+#rectangle 3 = [(0,0),(1,0), (0,-1), (0,-2), (1,-1),(1,-2)]
 
-#rectangle_4_tiles = [(0,0),(1,0), (0,-1), (0,-2), (1,-1),(1,-2), (-1,0), (-2,0), (-3,0), (-1,-1), (-2,-1), (-3,-1), (-1,-2), (-2,-2), (-3,-3)]
+#rectangle 4 = [(0, 0), (1, 0), (0, -1), (0, -2), (1, -1), (1, -2), (-1, -2), (-1, -1), (-1, 0), (-2, -2), (-2, -1), (-2, 0), (-3, -2), (-3, -1), (-3, 0)]
 
-#rectangle_5_tiles = [(0,0), (1,0), (0,-1), (0,-2), (1,-1), (1,-2), (-1,0), (-2,0), (-3,0), (-1,-1), (-2,-1), (-3,-1), (-1,-2), (-2,-2), (-3,-3), 
-#(-3,1), (-3,2), (-3,3), (-3,4), (-3,5), (-2,1), (-2,2), (-2,3), (-2,4), (-2,5), (-1,1), (-1,2), (-1,3), (-1,4), (-1,5), (0,1), (0,2), (0,3), (0,4), (0,5), (1,1), (1,2), (1,3), (1,4), (1,5)]
+#rectangle 5 = [(0, 0), (1, 0), (0, -1), (0, -2), (1, -1), (1, -2), (-1, -2), (-1, -1), (-1, 0), (-2, -2), (-2, -1), (-2, 0), (-3, -2), (-3, -1), (-3, 0), (-3, 1), (-3, 2), (-3, 3), (-3, 4), (-3, 5), (-2, 1), (-2, 2), (-2, 3), (-2, 4), (-2, 5), (-1, 1), (-1, 2), (-1, 3), (-1, 4), (-1, 5), (0, 1), (0, 2), (0, 3), (0, 4), (0, 5), (1, 1), (1, 2), (1, 3), (1, 4), (1, 5)]
+
+#rectangle 6 = [(0, 0), (1, 0), (0, -1), (0, -2), (1, -1), (1, -2), (-1, -2), (-1, -1), (-1, 0), (-2, -2), (-2, -1), (-2, 0), (-3, -2), (-3, -1), (-3, 0), (-3, 1), (-3, 2), (-3, 3), (-3, 4), (-3, 5), (-2, 1), (-2, 2), (-2, 3), (-2, 4), (-2, 5), (-1, 1), (-1, 2), (-1, 3), (-1, 4), (-1, 5), (0, 1), (0, 2), (0, 3), (0, 4), (0, 5), (1, 1), (1, 2), (1, 3), (1, 4), (1, 5), (2, -2), (3, -2), (4, -2), (5, -2), (6, -2), (7, -2), (8, -2), (2, -1), (3, -1), (4, -1), (5, -1), (6, -1), (7, -1), (8, -1), (2, 0), (3, 0), (4, 0), (5, 0), (6, 0), (7, 0), (8, 0), (2, 1), (3, 1), (4, 1), (5, 1), (6, 1), (7, 1), (8, 1), (2, 2), (3, 2), (4, 2), (5, 2), (6, 2), (7, 2), (8, 2), (2, 3), (3, 3), (4, 3), (5, 3), (6, 3), (7, 3), (8, 3), (2, 4), (3, 4), (4, 4), (5, 4), (6, 4), (7, 4), (8, 4), (2, 5), (3, 5), (4, 5), (5, 5), (6, 5), (7, 5), (8, 5)]
+
 
 
 
 # rectangle should be a list of touples (coordinates) starting point(0,0)
 
 # index 2 = right ; index 3 = up ; index 4 = left index 5 = down
+
+
+
+
+
+# rectangle 4 expected !!FAULTY!! = [(0, 0), (1, 0), (0, -1), (0, -2), (1, -1), (1, -2), (-1, 0), (-2, 0), (-3, 0) (-1, -1) (-2, -1) (-3, -1) (-1, -2) (-2, -2)]
+# rectangle 4 actual !! RIGHT I THINK !!   = [(0, 0), (1, 0), (0, -1), (0, -2), (1, -1), (1, -2), (-1, -2), (-1, -1), (-1, 0), (-2, -2), (-2, -1), (-2, 0), (-3, -2), (-3, -1), (-3, 0)]
+
+#                      
 
 
 
