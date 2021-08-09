@@ -75,9 +75,11 @@ def get_next_square(tiles, index):
 
         # get the tiles of the square at index
         index_square_tiles = []
-        for i in range(left_top_tile[0], right_top_tile[0]+1):
-            for j in range(max(y_values) + 1, fibo+1):
-                index_square_tiles.append((i ,j))
+
+        for j in range(1, fibo+1):
+            for i in (top_line):
+                index_square_tiles.append((i[0], i[1]-j))
+
         return index_square_tiles
 
     def project_right():
@@ -104,9 +106,11 @@ def get_next_square(tiles, index):
         index_square_tiles = []
 
         #use len(right_line)+1 instead maybe
-        for i in range(right_top_tile[1], right_bot_tile[1]+1):
-            for j in range(max(x_values) + 1, fibo+1):
-                index_square_tiles.append((j ,i))
+
+        for j in range(1, fibo+1):
+            for i in (right_line):
+                index_square_tiles.append((i[0]+j, i[1]))
+
         return index_square_tiles
 
 
@@ -161,12 +165,13 @@ def get_next_square(tiles, index):
             bottom_line.append((i, max(y_values)))
 
         fibo = fib(index)
-
-        # get the tiles of the square at index
+        
         index_square_tiles = []
-        for i in range(left_bot_tile[0], right_bot_tile[0]+1):
-            for j in range(max(y_values) + 1, fibo+1):
-                index_square_tiles.append((i ,j))
+
+        for j in range(1, fibo+1):
+            for i in (bottom_line):
+                index_square_tiles.append((i[0], i[1]+j))
+
         return index_square_tiles
     
     if get_move_directions(index) == "down":
@@ -180,6 +185,7 @@ def get_next_square(tiles, index):
         #print index_square_tiles
         #> **
 
+
     added_tiles = []
     for given_tiles in tiles:
         added_tiles.append(given_tiles)
@@ -187,6 +193,55 @@ def get_next_square(tiles, index):
         added_tiles.append(index_tile)
     return added_tiles
                 
+
+
+
+def get_fib_tangles_additive(index):
+    """returns a list1 that contains lists2=coordinates of added fibonacci squares up until index, COORDINATES UNORDERED"""
+    fib_tangles = [[(0, 0)], [(0,0),(1,0)], [(0,0),(1,0), (0,-1), (0,-2), (1,-1),(1,-2)]]
+    if index == 1:
+        return fib_tangles[0]
+    elif index == 2:
+        return fib_tangles[1]
+    elif index == 3:
+        return fib_tangles[2]
+    else:
+        i = 4
+        while i <= index:
+            fib_tangles.append(get_next_square(fib_tangles[i-2], i))
+            i += 1
+    return fib_tangles
+
+def get_fib_tangles_solo(index):
+    """returns a list1 that contains lists2=coordinates of fibonacci squares up until index, COORDINATES UNORDERED"""
+    fib_tangles = [[(0,0)], [(1,0)], [(0,-1), (0,-2), (1,-1),(1,-2)]]
+    if index == 1:
+        return fib_tangles[0]
+    elif index == 2:
+        return fib_tangles[1]
+    elif index == 3:
+        return fib_tangles[2]
+    else:
+        fib_tangles = [[(0, 0)], [(0,0),(1,0)], [(0,0),(1,0), (0,-1), (0,-2), (1,-1),(1,-2)]]
+        i = 4
+        while i <= index:
+            fib_tangles.append(get_next_square(fib_tangles[i-2], i))
+            i += 1
+    for elements in fib_tangles[-2]:
+        if elements in fib_tangles[-1]:
+            fib_tangles[-1].remove(elements)
+    return fib_tangles[-1]
+
+
+
+
+
+
+
+
+
+
+"""
 
 rectangle_3 = [(0,0),(1,0), (0,-1), (0,-2), (1,-1),(1,-2)]
             
@@ -206,7 +261,7 @@ print("Rectangle 6: ")
 print(rectangle_6)
 print("\n"*2)
 
-
+"""
 
 #rectangle 1 = [0, 0]
 
@@ -220,6 +275,7 @@ print("\n"*2)
 
 #rectangle 6 = [(0, 0), (1, 0), (0, -1), (0, -2), (1, -1), (1, -2), (-1, -2), (-1, -1), (-1, 0), (-2, -2), (-2, -1), (-2, 0), (-3, -2), (-3, -1), (-3, 0), (-3, 1), (-3, 2), (-3, 3), (-3, 4), (-3, 5), (-2, 1), (-2, 2), (-2, 3), (-2, 4), (-2, 5), (-1, 1), (-1, 2), (-1, 3), (-1, 4), (-1, 5), (0, 1), (0, 2), (0, 3), (0, 4), (0, 5), (1, 1), (1, 2), (1, 3), (1, 4), (1, 5), (2, -2), (3, -2), (4, -2), (5, -2), (6, -2), (7, -2), (8, -2), (2, -1), (3, -1), (4, -1), (5, -1), (6, -1), (7, -1), (8, -1), (2, 0), (3, 0), (4, 0), (5, 0), (6, 0), (7, 0), (8, 0), (2, 1), (3, 1), (4, 1), (5, 1), (6, 1), (7, 1), (8, 1), (2, 2), (3, 2), (4, 2), (5, 2), (6, 2), (7, 2), (8, 2), (2, 3), (3, 3), (4, 3), (5, 3), (6, 3), (7, 3), (8, 3), (2, 4), (3, 4), (4, 4), (5, 4), (6, 4), (7, 4), (8, 4), (2, 5), (3, 5), (4, 5), (5, 5), (6, 5), (7, 5), (8, 5)]
 
+#get_fib_ta(6) [[(0, 0)], [(0, 0), (1, 0)], [(0, 0), (1, 0), (0, -1), (0, -2), (1, -1), (1, -2)], [(0, 0), (1, 0), (0, -1), (0, -2), (1, -1), (1, -2), (-1, -2), (-1, -1), (-1, 0), (-2, -2), (-2, -1), (-2, 0), (-3, -2), (-3, -1), (-3, 0)], [(0, 0), (1, 0), (0, -1), (0, -2), (1, -1), (1, -2), (-1, -2), (-1, -1), (-1, 0), (-2, -2), (-2, -1), (-2, 0), (-3, -2), (-3, -1), (-3, 0), (-3, 1), (-2, 1), (-1, 1), (0, 1), (1, 1), (-3, 2), (-2, 2), (-1, 2), (0, 2), (1, 2), (-3, 3), (-2, 3), (-1, 3), (0, 3), (1, 3), (-3, 4), (-2, 4), (-1, 4), (0, 4), (1, 4), (-3, 5), (-2, 5), (-1, 5), (0, 5), (1, 5)], [(0, 0), (1, 0), (0, -1), (0, -2), (1, -1), (1, -2), (-1, -2), (-1, -1), (-1, 0), (-2, -2), (-2, -1), (-2, 0), (-3, -2), (-3, -1), (-3, 0), (-3, 1), (-2, 1), (-1, 1), (0, 1), (1, 1), (-3, 2), (-2, 2), (-1, 2), (0, 2), (1, 2), (-3, 3), (-2, 3), (-1, 3), (0, 3), (1, 3), (-3, 4), (-2, 4), (-1, 4), (0, 4), (1, 4), (-3, 5), (-2, 5), (-1, 5), (0, 5), (1, 5), (2, -2), (2, -1), (2, 0), (2, 1), (2, 2), (2, 3), (2, 4), (2, 5), (3, -2), (3, -1), (3, 0), (3, 1), (3, 2), (3, 3), (3, 4), (3, 5), (4, -2), (4, -1), (4, 0), (4, 1), (4, 2), (4, 3), (4, 4), (4, 5), (5, -2), (5, -1), (5, 0), (5, 1), (5, 2), (5, 3), (5, 4), (5, 5), (6, -2), (6, -1), (6, 0), (6, 1), (6, 2), (6, 3), (6, 4), (6, 5), (7, -2), (7, -1), (7, 0), (7, 1), (7, 2), (7, 3), (7, 4), (7, 5), (8, -2), (8, -1), (8, 0), (8, 1), (8, 2), (8, 3), (8, 4), (8, 5), (9, -2), (9, -1), (9, 0), (9, 1), (9, 2), (9, 3), (9, 4), (9, 5)]]
 
 
 
