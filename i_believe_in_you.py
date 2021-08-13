@@ -1,3 +1,5 @@
+"""
+
 lala = {1: "Simon", 7: "tobias", 3: "vanessa", 1: "julian"}
 
 print(str(lala))
@@ -36,7 +38,7 @@ for key, value in cities.items():
     print("\n\n")
 
 # # # 6-12 # # #
-
+"""
 ####################### I believe in you! #######################
 
 import sys

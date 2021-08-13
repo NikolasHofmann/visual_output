@@ -1,5 +1,4 @@
 import pygame
-from random import randint
 
 def get_fibs(fib_index):
     """outputs the fibonacci at position """
@@ -94,40 +93,25 @@ def get_top_left(index):
             i += 1
     return (x, y)
 
-
-
-def make_square(index):
-    square = []
-    for i in range(0 ,fib(index)):
-        for j in range(0,fib(index)):
-            square.append((get_top_left(index)[0] + i,get_top_left(index)[1] + j))
-    return square
-
-
-
-
-def make_rect(index, screen):
-    left = get_top_left(index)[0] + screen[0]/2
-    right = get_top_left(index)[1] + screen[1]/2
-    width = fib(index)
-    heigth = width
-    
-    rectangle = pygame.Rect(left, right, width, heigth)
-    return rectangle
-
-
-def make_rects_random(index, screen, x, y):
-    left = get_top_left(index)[0] + screen[0]-x
-    right = get_top_left(index)[1] + screen[1]-y
-    width = fib(index)
-    heigth = width
-    
-    rectangle = pygame.Rect(left, right, width, heigth)
-    return rectangle
-
-
-
-
+for i in range(1, 10):
+    print(get_top_left(i))
+    print("\n")
 
 
         
+
+
+
+
+
+
+
+
+
+#done = False
+#while not done:
+#    number = input()
+#    if number == "quit":
+#        done = True
+#    else:
+#        print(give_fib(number))
