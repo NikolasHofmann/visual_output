@@ -89,6 +89,7 @@ print("\n\n\n\n\n\n")
 chance = 1
 p = 100
 k = float(1)
+# do it very often
 for i in range(1, 100000000000000):
     for char in message:
         if i >= 50:
